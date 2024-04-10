@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { ContactRow } from "./ContactRow";
 
 
+const fakeAPI = "https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users"
 
 const dummyContacts = [
     { id: 1, name: "R2-D2", phone: "222-222-2222", email: "r2d2@droids.com" },
@@ -9,28 +11,52 @@ const dummyContacts = [
     { id: 3, name: "BB-8", phone: "888-888-8888", email: "bb8@droids.com" },
   ];
 
+
+
 export const ContactList = () => {
   
-  const [contacts, setContacts] = useState(dummyContacts);
+  const [contacts, setContacts] = useState([]);
 
-  console.log("contacts:", contacts)
-  
+  useEffect(() => {
+    async function fetchContacts(){
+        try{
+            const response = await fetch(fakeAPI);
+            const result = await response.json();
+            console.log("result", result);  
+            setContacts(result);
+                       
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchContacts();
+                
+    },[]);  
   
     return (
-        <>
+        
             <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th  colSpan="3">Contact List</th>    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Phone</td>
+                    </tr>
+
                 {
                     contacts.map((contact) => {
                        return <ContactRow key={contact.id} contact={contact} />
                     })
                     
                 }
+                </tbody>
             </table>
-        </>
+        
     )
 };

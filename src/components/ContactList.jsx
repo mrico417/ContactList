@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { ContactRow } from "./ContactRow";
 
-
-const fakeAPI = "https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users"
+const APIURL = "https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users"
 
 const dummyContacts = [
     { id: 1, name: "R2-D2", phone: "222-222-2222", email: "r2d2@droids.com" },
@@ -13,14 +12,14 @@ const dummyContacts = [
 
 
 
-export const ContactList = () => {
+export const ContactList = ({setSelectedContactId}) => {
   
   const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
     async function fetchContacts(){
         try{
-            const response = await fetch(fakeAPI);
+            const response = await fetch(APIURL);
             const result = await response.json();
             console.log("result", result);  
             setContacts(result);
@@ -51,7 +50,7 @@ export const ContactList = () => {
 
                 {
                     contacts.map((contact) => {
-                       return <ContactRow key={contact.id} contact={contact} />
+                       return <ContactRow key={contact.id} contact={contact} setSelectedContactId={setSelectedContactId}/>
                     })
                     
                 }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-export const SelectedContact = ({selectedContactId, setSelectedContactId}) => {
+export const SelectedContact = ({selectedContactId}) => {
 
     const userURL = `https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/${selectedContactId}`
-    const [contact,setContact] = useState(null);
-    const [address,setAddress] = useState(null);
+    const [contact,setContact] = useState({});
+    const [address,setAddress] = useState({});
 
     useEffect(()=>{
         async function fetchContact(){
@@ -13,9 +13,9 @@ export const SelectedContact = ({selectedContactId, setSelectedContactId}) => {
                 const response = await fetch(userURL);
                 const result = await response.json();
                 const { address } = result;
-                console.log(address)
+                console.log(address);
                 setContact(result);
-                setAddress(address)
+                setAddress(address);
             } catch (error) {
                 console.log(error);
             }
@@ -25,10 +25,9 @@ export const SelectedContact = ({selectedContactId, setSelectedContactId}) => {
     
     return (
         <section>
-            <h3>{contact.name} ({contact.phone})</h3>
+            <h3>{contact.name} {contact.phone}</h3>
             <p>{address.street} {address.suite}</p>
             <p>{address.city} {address.zipcode}</p>
-            <button onClick={()=>{setSelectedContactId(null)}}>Return</button>
         </section>
     )
 };

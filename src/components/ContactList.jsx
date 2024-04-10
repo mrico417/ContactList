@@ -50,7 +50,13 @@ export const ContactList = ({setSelectedContactId}) => {
 
                 {
                     contacts.map((contact) => {
-                       return <ContactRow key={contact.id} contact={contact} setSelectedContactId={setSelectedContactId}/>
+                       return (
+                        <ContactRow 
+                            key={contact.id} 
+                            contact={contact} 
+                            setSelectedContactId={setSelectedContactId}
+                        />
+                    )
                     })
                     
                 }
